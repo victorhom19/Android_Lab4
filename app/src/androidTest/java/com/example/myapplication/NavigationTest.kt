@@ -16,11 +16,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
-/**
- * Instrumented test, which will execute on an Android device.
- *
- * See [testing documentation](http://d.android.com/tools/testing).
- */
+
 @RunWith(AndroidJUnit4::class)
 class NavigationTest {
     @Test
@@ -86,6 +82,29 @@ class NavigationTest {
             .perform(click())
         rotateAndCheck(R.id.fragment3)
 
+    }
+
+    @Test
+    fun testUpNavigation() {
+        Espresso.onView(ViewMatchers.withId(R.id.bnToSecond))
+            .perform(click())
+        Espresso.onView(ViewMatchers.withId(R.id.bnToThird))
+            .perform(click())
+        openAbout()
+
+        checkView(R.id.activity_about)
+        Espresso.onView(ViewMatchers
+            .withContentDescription(R.string.nav_app_bar_navigate_up_description))
+            .perform(click())
+        checkView(R.id.fragment3)
+        Espresso.onView(ViewMatchers
+            .withContentDescription(R.string.nav_app_bar_navigate_up_description))
+            .perform(click())
+        checkView(R.id.fragment2)
+        Espresso.onView(ViewMatchers
+            .withContentDescription(R.string.nav_app_bar_navigate_up_description))
+            .perform(click())
+        checkView(R.id.fragment1)
     }
 
     private fun rotateAndCheck(element: Int) {
